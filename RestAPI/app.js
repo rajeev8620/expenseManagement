@@ -29,11 +29,11 @@ app.set('view engine', 'pug');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
-app.use(cookieParser());
+app.use(bodyParser.json());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'OzhclfxGp956SMjtq',
@@ -41,6 +41,13 @@ app.use(session({
   saveUninitialized: false,
   cookie: { maxAge: 60000 }
 }));
+
+app.all("/*", function(req, res, next){
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  next();
+});
 
 
 // DB connection

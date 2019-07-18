@@ -2,13 +2,24 @@
  * Controller for Add / Update / Delete of Profile table
  */
 var flash = require('express-flash-messages')
+
+exports.checkLogin=function(req,res){
+ var email=req.body.loginObj.Email;
+  var password=req.body.loginObj.Password;
+  req.getConnection(function(err, connection){
+    var query = connection.query("SELECT * FROM ConsumerDetails WHERE Email = ? AND Password=md5(?)", [email,password], function(err, rows){
+      if(err) console.log("Error Selecting user : %s", err);
+       res.send({status:200,data:rows});
+    });
+  });
+}
  // Single Profile View
  exports.view = function(req, res){
    var id = req.params.id;
    req.getConnection(function(err, connection){
      var query = connection.query("SELECT * FROM ConsumerDetails WHERE ConsumerId = ?", [id], function(err, rows){
        if(err) console.log("Error Selecting list : %s", err);
-	res.send({status:200,data:rows});
+	      res.send({status:200,data:rows});
      });
    });
  };
@@ -44,19 +55,18 @@ exports.edit = function(req, res){
 
 //Profile save
 exports.save = function(req, res){
-  var input = JSON.parse(JSON.stringify(req.body));
+  var input=req.body;
   req.getConnection(function(err, connection){
     var data = {
-      first_name: input.first_name,
-      last_name: input.last_name,
-      email: input.email,
-      phone: input.phone,
-      street_address: input.street_address,
-      street_address_2: input.street_address_2,
-      city: input.city,
-      state: input.state,
-      country: input.country
+      FirstName: input.FirstName,
+      LastName: input.LastName,
+      Email: input.Email,
+      Password: input.Password,
+      UserType: input.UserType,
+      Status: input.Status,
+      LastModified: input.LastModified
     };
+    console.log(JSON.stringify(data));
     var query = connection.query("INSERT INTO ConsumerDetails set ?", data, function(err, rows, fields){
       if(err)
         console.log("Error in Inserting Data : %s", err);
@@ -87,7 +97,8 @@ exports.save_edit = function(req, res){
       state: input.state,
       country: input.country
     };
-    connection.query("UPDATE ConsumerDetails set ? WHERE ConsumerId = ?", [data, id], function(err, rows){
+    console.log(JSON.stringify(data));
+   /* connection.query("UPDATE ConsumerDetails set ? WHERE ConsumerId = ?", [data, id], function(err, rows){
       if(err)
         console.log("Error in Updating : %s", err);
       else{
@@ -103,7 +114,7 @@ exports.save_edit = function(req, res){
           }
         });
       }
-    });
+    });*/
   });
 };
 

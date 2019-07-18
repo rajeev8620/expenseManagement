@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {LoginService} from '../services/login.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +21,7 @@ export class LoginComponent implements OnInit {
       private formBuilder: FormBuilder,
       private route: ActivatedRoute,
       private router: Router,
+      private logSer:LoginService
   ) { }
 
   ngOnInit() {
@@ -38,11 +41,16 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     var emailId=this.loginForm.value.email;
     var password=this.loginForm.value.password;
-    this.loginObj={
-      'function':'userLogin',
-      'Email':emailId,
-      'Password':password
-    };
+    this.loginObj={Email:emailId,Password:password} ;
+    this.logSer.checkLogin(this.loginObj)
+            .pipe(first())
+            .subscribe(
+                data => {
+                  alert(JSON.stringify(data));
+                },
+                error => {
+                  console.log("The error is ",error);
+                });
   }
 
 }
