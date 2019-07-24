@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                  alert(JSON.stringify(data));
+                  this.router.navigateByUrl('/dashboard');
                 },
                 error => {
                   console.log("The error is ",error);

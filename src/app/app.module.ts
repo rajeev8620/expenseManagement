@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginModule } from '../login/login.module';
+import { DashboardModule } from '../dashboard/dashboard.module';
+import { ShareModule } from '../share/share.module';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { LoginModule } from '../login/login.module';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    LoginModule
+    LoginModule,
+    DashboardModule,
+    ShareModule
   ],
   providers: [],
   bootstrap: [AppComponent]

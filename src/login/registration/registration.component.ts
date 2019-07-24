@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from '../../helpers/must-match.validator';
 import { Router } from '@angular/router';
+import { RegistrationService } from '../services/registration.service';
+import { formatDate } from '@angular/common';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration',
@@ -15,12 +18,16 @@ export class RegistrationComponent implements OnInit {
   submitted = false;
   regSuccess=0;
   regExist=0;
+  today= new Date();
+  jstoday = '';
   constructor(
-
     private formBuilder: FormBuilder,
     private router: Router,
+    private regSer:RegistrationService
     
-  ) { }
+  ) { 
+    this.jstoday = formatDate(this.today, 'yyyy-MM-dd hh:mm:ss a', 'en-US', '+0530');
+  }
 
   ngOnInit() {
       this.registerForm = this.formBuilder.group({
@@ -48,6 +55,19 @@ export class RegistrationComponent implements OnInit {
     var lastName=this.registerForm.value.lastName;
     var emailId=this.registerForm.value.email;
     var password=this.registerForm.value.password;
+    const regObj={
+      FirstName:firstName,LastName:lastName,Email:emailId,Password:password,UserType:1,Status:1,LastModified:this.jstoday
+    }
+    alert(JSON.stringify(regObj));
+    // this.regSer.addRegistration(regObj)
+    // .pipe(first())
+    // .subscribe(
+    //     data => {
+    //       this.router.navigateByUrl('/login');
+    //     },
+    //     error => {
+    //       console.log("The error is ",error);
+    //     });
   }
 
 }

@@ -55,7 +55,7 @@ exports.edit = function(req, res){
 
 //Profile save
 exports.save = function(req, res){
-  var input=req.body;
+  var input=req.body.regObj;
   req.getConnection(function(err, connection){
     var data = {
       FirstName: input.FirstName,
