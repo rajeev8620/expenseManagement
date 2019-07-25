@@ -3,6 +3,29 @@
  */
 var flash = require('express-flash-messages')
 
+let date_ob = new Date();
+
+// current date
+// adjust 0 before single digit date
+let date = ("0" + date_ob.getDate()).slice(-2);
+
+// current month
+let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+
+// current year
+let year = date_ob.getFullYear();
+
+// current hours
+let hours = date_ob.getHours();
+
+// current minutes
+let minutes = date_ob.getMinutes();
+
+// current seconds
+let seconds = date_ob.getSeconds();
+
+const currentDateTime=year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+
 exports.checkLogin=function(req,res){
  var email=req.body.loginObj.Email;
   var password=req.body.loginObj.Password;
@@ -64,7 +87,7 @@ exports.save = function(req, res){
       Password: input.Password,
       UserType: input.UserType,
       Status: input.Status,
-      LastModified: input.LastModified
+      LastModified: currentDateTime
     };
     console.log(JSON.stringify(data));
     var query = connection.query("INSERT INTO ConsumerDetails set ?", data, function(err, rows, fields){
