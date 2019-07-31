@@ -18,7 +18,7 @@
     width: 260px;
     left: 0;
     z-index: 1030;
-    border-right: 1px solid #ddd;
+    border-right: 6px solid #ddd;
 
     .sidebar-wrapper{
         position: relative;
@@ -248,6 +248,9 @@
     }
     &[data-color="black"]{
       @include sidebar-color($dark-color);
+    }
+&[data-color="blue"]{
+      @include sidebar-color($sidebar-background);
     }
 
 
