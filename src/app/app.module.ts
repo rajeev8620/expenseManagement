@@ -1,13 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginModule } from '../login/login.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
-import { ShareModule } from '../share/share.module';
+import { SidebarModule } from 'src/sidebar/sidebar.module';
+import { NavbarModule } from 'src/shared/navbar/navbar.module';
+import { FooterModule } from 'src/shared/footer/footer.module';
 
 
 @NgModule({
@@ -15,14 +17,15 @@ import { ShareModule } from '../share/share.module';
     AppComponent,
   ],
   imports: [
-    NgbModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
+    CommonModule,
+    BrowserAnimationsModule,
     LoginModule,
     DashboardModule,
-    ShareModule
+    SidebarModule,
+    NavbarModule,
+    FooterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

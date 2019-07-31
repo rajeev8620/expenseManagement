@@ -15,8 +15,7 @@ export class RegistrationService {
     this.api_url=this.configSer.apiUrl;
   }
   addRegistration(regObj:any): Observable<any> {
-    const obj = {regObj:regObj};
-    alert(JSON.stringify(obj));   
+    const obj = {regObj:regObj};      
     return this.http.post<any>(`${this.api_url}profiles/add`,obj).pipe(map(userData => {
       if (userData) {
         if(userData.status==200){

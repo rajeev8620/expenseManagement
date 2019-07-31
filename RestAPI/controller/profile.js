@@ -3,29 +3,6 @@
  */
 var flash = require('express-flash-messages')
 
-let date_ob = new Date();
-
-// current date
-// adjust 0 before single digit date
-let date = ("0" + date_ob.getDate()).slice(-2);
-
-// current month
-let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-
-// current year
-let year = date_ob.getFullYear();
-
-// current hours
-let hours = date_ob.getHours();
-
-// current minutes
-let minutes = date_ob.getMinutes();
-
-// current seconds
-let seconds = date_ob.getSeconds();
-
-const currentDateTime=year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
-
 exports.checkLogin=function(req,res){
  var email=req.body.loginObj.Email;
   var password=req.body.loginObj.Password;
@@ -78,20 +55,20 @@ exports.edit = function(req, res){
 
 //Profile save
 exports.save = function(req, res){
-  var input=req.body.regObj;
-  req.getConnection(function(err, connection){
-    var data = {
-      FirstName: input.FirstName,
-      LastName: input.LastName,
-      Email: input.Email,
-      Password: input.Password,
-      UserType: input.UserType,
-      Status: input.Status,
-      LastModified: currentDateTime
-    };
-    console.log(JSON.stringify(data));
-    var query = connection.query("INSERT INTO ConsumerDetails set ?", data, function(err, rows, fields){
-      if(err)
+  const input = req.body.regObj;
+const firstName=input.FirstName;
+const lastName=input.LastName;
+const email=input.Email;
+const pass=input.Password;
+const userType=input.UserType;
+const status=input.Status;
+const myQuery=`INSERT INTO ConsumerDetails (FirstName,LastName,Email,Password,UserType,Status,LastModified) VALUE ('${firstName}','${lastName}','${email}',md5('${pass}'),'${userType}','${status}',NOW())`;
+console.log(myQuery);
+
+req.getConnection(function(err, connection){
+    var query = connection.query(myQuery, function(err, rows, fields){
+ 
+       if(err)
         console.log("Error in Inserting Data : %s", err);
       else{
         var query = connection.query("SELECT * FROM ConsumerDetails WHERE ConsumerId = ?", rows.insertId, function(err, rows){
@@ -100,14 +77,20 @@ exports.save = function(req, res){
         });
 
       }
-    });
-  });
+     });
+});
 };
 
 //Profile Save Edit
 exports.save_edit = function(req, res){
-  var input = JSON.parse(JSON.stringify(req.body));
-  var id = req.params.id;
+  const input = req.body.regObj;
+const firstName=input.FirstName;
+const lastName=input.LastName;
+const email=input.Email;
+const pass=input.Password;
+const userType=input.UserType;
+const status=input.Status;
+
   req.getConnection(function(err, connection){
     var data = {
       first_name: input.first_name,
@@ -120,7 +103,6 @@ exports.save_edit = function(req, res){
       state: input.state,
       country: input.country
     };
-    console.log(JSON.stringify(data));
    /* connection.query("UPDATE ConsumerDetails set ? WHERE ConsumerId = ?", [data, id], function(err, rows){
       if(err)
         console.log("Error in Updating : %s", err);

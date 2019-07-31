@@ -17,7 +17,6 @@ export class LoginService {
 
   checkLogin(loginObj:any): Observable<any> {
     const obj = {loginObj:loginObj};
-      
     return this.http.post<any>(`${this.api_url}profiles/login`,obj).pipe(map(userData => {
       if (userData) {
         if(userData.status==200){

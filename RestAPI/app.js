@@ -14,7 +14,7 @@ var mysql = require('mysql'),
       host: 'cs209.cwgblr.com',
       user: 'root',
       password: 'cellworks',
-      port: 3306,
+      //socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
       database: 'ExpenseManagement'
     };
 /*Profile Routes*/

@@ -56,18 +56,17 @@ export class RegistrationComponent implements OnInit {
     var emailId=this.registerForm.value.email;
     var password=this.registerForm.value.password;
     const regObj={
-      FirstName:firstName,LastName:lastName,Email:emailId,Password:password,UserType:1,Status:1,LastModified:this.jstoday
+      FirstName:firstName,LastName:lastName,Email:emailId,Password:password,UserType:1,Status:1
     }
-    alert(JSON.stringify(regObj));
-    this.regSer.addRegistration(regObj)
-    .pipe(first())
-    .subscribe(
-        data => {
-          this.router.navigateByUrl('/login');
-        },
-        error => {
-          console.log("The error is ",error);
-        });
+     this.regSer.addRegistration(regObj)
+     .pipe(first())
+     .subscribe(
+         data => {
+           this.router.navigateByUrl('/login');
+         },
+         error => {
+           console.log("The error is ",error);
+         });
   }
 
 }
