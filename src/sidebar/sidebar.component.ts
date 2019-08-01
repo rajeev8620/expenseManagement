@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 export const ROUTES= [];
@@ -11,6 +12,10 @@ export const ROUTES= [];
 export class SidebarComponent implements OnInit {
     username:any;
     public menuItems: any[];
+constructor(
+      private route: ActivatedRoute,
+      private router: Router
+  ) { }
     ngOnInit() {
         
         this.username=localStorage.getItem('userName');
@@ -21,5 +26,6 @@ export class SidebarComponent implements OnInit {
         localStorage.clear();      
       }          
       localStorage.removeItem('userName');
+	this.router.navigateByUrl('/login');
   }
 }
