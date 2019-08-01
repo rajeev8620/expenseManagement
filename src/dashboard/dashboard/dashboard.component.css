@@ -1,0 +1,11 @@
+.page-wrapper {
+    background: #eef5f9;
+    position: relative;
+    transition: .2s ease-in;
+}
+* {
+    outline: 0;
+}
+*, *::after, *::before {
+    box-sizing: border-box;
+}
