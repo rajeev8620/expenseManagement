@@ -11,14 +11,25 @@ import { NgModule } from '@angular/core';
 
 
 const  routes:  Routes   = [
-      {
-      path:  'dashboard',
-      component:  DashboardComponent,
-      children: [
-        {
-        path:  'expenseanalysis',
-        component:  ExpenseAnalysisComponent
-        },
+
+{
+        path:'',
+        redirectTo: 'dashboard',
+        pathMatch: 'full' 
+    },
+    {
+        path: 'dashboard',
+        component: DashboardComponent,
+        children:[
+            {
+                path:'',
+                redirectTo: 'expenseanalysis',
+                pathMatch: 'full' 
+            },
+            {
+                path:'expenseanalysis',
+                component: ExpenseAnalysisComponent 
+            },
         {
         path:  'addexpense',
         component:  AddExpenseComponent
@@ -35,7 +46,7 @@ const  routes:  Routes   = [
         path:  'userprofile',
         component:  UserProfileComponent
         }
-      ]
+        ]
     }
   ];
 
