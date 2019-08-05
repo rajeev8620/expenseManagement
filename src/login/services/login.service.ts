@@ -16,21 +16,21 @@ export class LoginService {
   }
 
   checkLogin(loginObj:any): Observable<any> {
-    const obj = {loginObj:loginObj};
-    return this.http.post<any>(`${this.api_url}profiles/login`,obj).pipe(map(userData => {
+    //const obj = {loginObj:loginObj};	
+    return this.http.post<any>(`${this.api_url}profiles/login`,loginObj).pipe(map(userData => {
       if (userData) {
         if(userData.status==200){
-          let consumerArray=userData.data[0];
-          let userName=consumerArray.FirstName+' '+consumerArray.LastName;
-          localStorage.setItem('ConsumerId', consumerArray.ConsumerId);
-          localStorage.setItem('email', consumerArray.Email);
-          localStorage.setItem('userType', consumerArray.UserType);
+          let consumerArray=userData.user;
+          let userName=userData.user.FirstName+' '+userData.user.LastName;
+          localStorage.setItem('ConsumerId', userData.user._id);
+          localStorage.setItem('email', userData.user.Email);
+          localStorage.setItem('userType', userData.user.UserType);
           localStorage.setItem('userName', userName);
         }else{
-          console.log(userData.data.message);
+          console.log(userData.message);
         }                                    
       }
-    return userData.data[0];
+    return userData.user;
     })); 
   }
 }

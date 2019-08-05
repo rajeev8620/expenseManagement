@@ -46,7 +46,13 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                  this.router.navigateByUrl('/dashboard');
+		this.loading = false;
+		if(typeof data==="undefined"){
+			alert("Invalid login credentials!");
+		}else{
+			this.router.navigateByUrl('/dashboard');
+		}
+                  
                 },
                 error => {
                   console.log("The error is ",error);
